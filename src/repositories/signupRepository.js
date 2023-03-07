@@ -10,3 +10,16 @@ export async function signupRepository (user) {
             ($1, $2, $3, $4);
     `, [email, password, username, imageUrl]);
 }
+
+export async function checkDoubles (user) {
+    const {email} = user;
+
+    return db.query(`
+        SELECT COUNT
+            (*)
+        FROM
+            users
+        WHERE
+            email=$1;
+    `, [email]);
+}
