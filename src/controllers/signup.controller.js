@@ -4,7 +4,7 @@ export async function signUp (req, res) {
 
     try {
         const result = await signupRepository(req.userObject);
-        res.redirect("https://twitter.com/home");
+        res.redirect("/");
     } catch (error) {
         res.status(500).send(error.message);
     }
