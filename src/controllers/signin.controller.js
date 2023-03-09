@@ -11,7 +11,7 @@ export async function signin (req, res) {
         if (rows[0].count !== "0") {
             if (rows[0].password === password) {
                 await passwordCheck(rows[0].id, tokenNum);
-                res.status(200).send(token);
+                res.status(200).send(token.token);
             } else {
                 res.sendStatus(403);
             }
