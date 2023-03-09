@@ -88,3 +88,33 @@ export async function schemaValidatePassword (req, res, next) {
         return res.sendStatus(401);
     }
 }
+
+export async function schemaValidateAuth (req, res, next) {
+    const {authorization} = req.headers;
+    const token = authorization?.replace("Bearer ", "");
+
+    if (!token) {
+        return res.sendStatus(401);
+    }
+
+    try {
+        const session = await db.query(`
+            SELECT
+                *
+            FROM
+                sessions
+            WHERE
+                token=$1`,
+            [token]
+        );
+        if (session.rows.length === 0) {
+            return res.sendStatus(401);
+        }
+        const userToken = session.rows[0];
+        req.userId = userToken.userId;
+        next();
+        return
+    } catch (error) {
+        return res.sendStatus(400);
+    }
+}
