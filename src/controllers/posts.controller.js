@@ -1,4 +1,4 @@
-import { createPostRepository, deletePostRepository, getPostsRepository } from "../repositories/postRepository"
+import { createPostRepository, deletePostRepository, getPostsRepository } from "../repositories/postRepository.js"
 
 export async function createPost (req, res){
     const { link, content } = req.body
